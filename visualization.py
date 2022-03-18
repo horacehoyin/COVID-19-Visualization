@@ -26,7 +26,7 @@ df_total_cases.index.name = 'Date'
 df_total_cases.index = pd.to_datetime(df_total_cases.index)
 
 
-def showCntyForDays(cnty, history=30):
+def show_cnty_for_days(cnty, history=30):
     """Show the data of a selected country/region
 
     Parameters
@@ -40,8 +40,8 @@ def showCntyForDays(cnty, history=30):
     -------
     None
     """
-    cnty = cntyValidation(cnty)[0]
-    history = historyValidation(history)
+    cnty = cnty_validation(cnty)[0]
+    history = history_validation(history)
 
     df_selected = df_total_cases[[cnty]].copy()
     df_selected['new'] = df_selected.diff(1)
@@ -53,7 +53,7 @@ def showCntyForDays(cnty, history=30):
     df_selected = df_selected[-history:]
 
     fig, axs = plt.subplots(nrows=2, ncols=1, figsize=(
-        getFigWidth(df_selected.shape[0]), 15), sharex=True)
+        get_fig_width(df_selected.shape[0]), 15), sharex=True)
     axs[0].bar(df_selected.index, df_selected.iloc[:, 0], label='Total Cases')
     axs[0].set_title(
         'Total COVID-19 Cases in {}'.format(df_cnty_info.at[cnty, 'Country/Region']))
@@ -86,7 +86,7 @@ def showCntyForDays(cnty, history=30):
     plt.show()
 
 
-def showSelectedCntyWithPerMillionForDays(cnty, history=30, title=False):
+def show_selected_cnty_with_per_million_for_days(cnty, history=30, title=False):
     """Show the data of a list of selected countries/regions
 
     Parameters
@@ -102,11 +102,11 @@ def showSelectedCntyWithPerMillionForDays(cnty, history=30, title=False):
     -------
     None
     """
-    cnty = sorted(cntyValidation(cnty))
-    df_new = getDFCasesWithPerMillion(cnty)[-history:]
+    cnty = sorted(cnty_validation(cnty))
+    df_new = get_DF_cases_with_per_million(cnty)[-history:]
 
     fig, axs = plt.subplots(nrows=2, ncols=1, figsize=(
-        getFigWidth(df_new.shape[0]), 15), sharex=True)
+        get_fig_width(df_new.shape[0]), 15), sharex=True)
 
     if not title:
         title_ax0 = 'Number of Daily New COVID-19 Cases'
@@ -133,7 +133,7 @@ def showSelectedCntyWithPerMillionForDays(cnty, history=30, title=False):
     plt.show()
 
 
-def showAvgHighestCasesForDays(per_1m=True, no_of_cnty=5, avgCases=7, history=30):
+def show_avg_highest_cases_for_days(per_1m=True, no_of_cnty=5, avg_cases=7, history=30):
     """Show the top n countries/regions with the highest average number of new cases
 
     Parameters
@@ -142,7 +142,7 @@ def showAvgHighestCasesForDays(per_1m=True, no_of_cnty=5, avgCases=7, history=30
         In case ```per_1m=True```, the average number of new cases is determined by cases per 1 million people
     no_of_cnty : int, default ```5```
         Number of top countries/regions to be selected
-    avgCases : int, default ```7```
+    avg_cases : int, default ```7```
         Number of days for computing the average
     history : int, default ```30```
         The number of days that the chart shows
@@ -151,39 +151,39 @@ def showAvgHighestCasesForDays(per_1m=True, no_of_cnty=5, avgCases=7, history=30
     -------
     None
     """
-    def getHighestCntyListFromDF(df):
+    def get_highest_cnty_list_from_DF(df):
         list_top_cnty = list(df.index)
         list_top_cnty = [x[:3] for x in list_top_cnty]
         list_top_cnty = sorted(list_top_cnty)
         return list_top_cnty
 
-    df_new = getDFCasesWithPerMillion(list(df_cnty_info.index))
-    df_new = df_new.rolling(avgCases).mean()
+    df_new = get_DF_cases_with_per_million(list(df_cnty_info.index))
+    df_new = df_new.rolling(avg_cases).mean()
     if per_1m:
         df_top = df_new.iloc[-1, int(len(df_new.columns)/2):]
     else:
         df_top = df_new.iloc[-1, :int(len(df_new.columns)/2)]
 
-    no_of_cnty = nCntyValidation(no_of_cnty)
+    no_of_cnty = ncnty_validation(no_of_cnty)
     df_top = df_top.sort_values(axis=0, ascending=False).head(no_of_cnty)
-    list_top_cnty = getHighestCntyListFromDF(df_top)
+    list_top_cnty = get_highest_cnty_list_from_DF(df_top)
 
     if per_1m:
         title_ax0 = 'Number of Daily New COVID-19 Cases of Top {} Countries/Regions with the Highest Average Number of New Cases per 1 Million People in Past {} Days'.format(
-            no_of_cnty, avgCases)
+            no_of_cnty, avg_cases)
         title_ax1 = 'Number of Daily New COVID-19 Cases per 1 Million People of Top {} Countries/Regions with the Highest Average Number of New Cases per 1 Million People in Past {} Days'.format(
-            no_of_cnty, avgCases)
+            no_of_cnty, avg_cases)
     else:
         title_ax0 = 'Number of Daily New COVID-19 Cases of Top {} Countries/Regions with the Highest Average Number of New Cases in Past {} Days'.format(
-            no_of_cnty, avgCases)
+            no_of_cnty, avg_cases)
         title_ax1 = 'Number of Daily New COVID-19 Cases per 1 Million People of Top {} Countries/Regions with the Highest Average Number of New Cases in Past {} Days'.format(
-            no_of_cnty, avgCases)
+            no_of_cnty, avg_cases)
 
-    showSelectedCntyWithPerMillionForDays(
+    show_selected_cnty_with_per_million_for_days(
         cnty=list_top_cnty, history=history, title=[title_ax0, title_ax1])
 
 
-def showHighestCasesInAllTime(no_of_cnty=5, history=30):
+def show_highest_cases_in_all_time(no_of_cnty=5, history=30):
     """Show the top n countries/regions with the highest total number of cases in all time
 
     Parameters
@@ -197,7 +197,7 @@ def showHighestCasesInAllTime(no_of_cnty=5, history=30):
     -------
     None
     """
-    no_of_cnty = nCntyValidation(no_of_cnty)
+    no_of_cnty = ncnty_validation(no_of_cnty)
     df_highest_total = df_total_cases.tail(1).T
     list_highest_cnty = list(df_highest_total.sort_values(
         list(df_highest_total.columns), ascending=False).index)
@@ -229,11 +229,11 @@ def showHighestCasesInAllTime(no_of_cnty=5, history=30):
     title_ax1 = 'Number of Daily New COVID-19 Cases per 1 Million People of Top {} Countries/Regions with the Highest Total Number of Cases'.format(
         no_of_cnty)
 
-    showSelectedCntyWithPerMillionForDays(
+    show_selected_cnty_with_per_million_for_days(
         list_highest_cnty, history=history, title=[title_ax0, title_ax1])
 
 
-def getDFCasesWithPerMillion(cnty):
+def get_DF_cases_with_per_million(cnty):
     df_selected = df_total_cases[cnty]
     df_new = df_selected.diff(1)
     df_new = pd.merge(left=df_new, right=df_new, left_index=True,
@@ -243,7 +243,7 @@ def getDFCasesWithPerMillion(cnty):
     return df_new
 
 
-def cntyValidation(input):
+def cnty_validation(input):
     cnty = []
 
     if not isinstance(input, list):
@@ -258,7 +258,7 @@ def cntyValidation(input):
     return cnty
 
 
-def historyValidation(input):
+def history_validation(input):
     try:
         history = int(input)
         if history == -1:
@@ -271,7 +271,7 @@ def historyValidation(input):
         return 30
 
 
-def nCntyValidation(input):
+def ncnty_validation(input):
     try:
         no_of_cnty = int(input)
         if no_of_cnty > 0 and no_of_cnty <= df_cnty_info.shape[0]:
@@ -282,7 +282,7 @@ def nCntyValidation(input):
         return 5
 
 
-def getFigWidth(nrow):
+def get_fig_width(nrow):
     fig_width = max((nrow/30.0) * 10, 15)
     fig_width = min(fig_width, 50)
     return fig_width
