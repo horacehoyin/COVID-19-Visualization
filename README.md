@@ -33,7 +33,7 @@ Note: The project was developed in Apple Silicon environment.
 
 There are four main files:
 
--   ```juh-data.ipynb``` has the below functions:
+-   ```juh_data.ipynb``` has the below functions:
     -	Download the data provided by https://ourworldindata.org.
     -	Transform the data for use.
     -	Save the downloaded and transformed data as CSVs.
@@ -44,15 +44,15 @@ There are four main files:
     -	Show the top countries/regions have the highest total number of cases in all time.
     -	Show the top countries/regions have the highest average number of cases in a selected period.
 
--   ```visualization-notebook.ipynb``` provides examples of how to use the visualization methods.
+-   ```visualization_notebook.ipynb``` provides examples of how to use the visualization methods.
 
--   ```visualization-explained.ipynb``` combines ```visualizations.py``` and ```visualization-notebook.ipynb``` with explanations on the methods.
+-   ```visualization_explained.ipynb``` combines ```visualizations.py``` and ```visualization_notebook.ipynb``` with explanations on the methods.
 
 
 ## Usage
 
 1.	Run ```juh-data.ipynb``` to download the dataset.
-2.	Run ```visualization-notebook.ipynb``` for visualization.
+2.	Run ```visualization_notebook.ipynb``` for visualization.
 	-	Change the parameters for different charts.
 
 
