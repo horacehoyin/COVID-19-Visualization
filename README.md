@@ -26,7 +26,6 @@ Use conda to install the conda environment.
 ```bash
 conda env create --file py38-covid.txt
 ```
-Note: The project was developed in Apple Silicon environment.
 
 
 ## Files
@@ -69,3 +68,10 @@ Refer to https://github.com/owid/covid-19-data/tree/master/public/data for detai
 
 Reference:
 -   Hannah Ritchie, Edouard Mathieu, Lucas Rodés-Guirao, Cameron Appel, Charlie Giattino, Esteban Ortiz-Ospina, Joe Hasell, Bobbie Macdonald, Diana Beltekian and Max Roser (2020) - "Coronavirus Pandemic (COVID-19)". Published online at OurWorldInData.org. Retrieved from: 'https://ourworldindata.org/coronavirus' [Online Resource]
+
+
+## Disclaimer
+
+This project is for demo purposes only, and has no fixed update schedule.
+
+Feel free to add an issue if you have any suggestions on this project.
